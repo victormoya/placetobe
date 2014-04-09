@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>P L A C E T O B E</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <style type="text/css">
+
+        html, body {
+            height: 100%;
+        }
+
+        .container-full {
+            margin: 0 auto;
+            width: 100%;
+            min-height: 100%;
+            background-image: url("{{ STATIC_URL }}images/landing.jpg");
+            color: #eee;
+            overflow: hidden;
+        }
+
+        .container-full a {
+            color: #efefef;
+            text-decoration: none;
+        }
+
+        .v-center {
+            margin-top: 7%;
+        }
+
+        .modal-title {
+            color: black;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container-full">
+    <div class="row">
+        <div class="col-lg-12 text-center v-center">
+
+            <h1>P L A C E T O B E</h1>
+
+            <p class="lead">One site to be on all events</p>
+            <br><br><br>
+
+            <form class="col-lg-12">
+
+                <a class="btn btn-lg btn-primary" data-toggle="modal" data-target="#enterModal"
+                   style="width:340px;text-align:center;margin:0 auto;">Enter
+                </a>
+
+                <div class="modal fade" id="enterModal"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Select an option</h4>
+                            </div>
+                            <div class="modal-body">
+                                    <a href="{% url 'profiles:login' %}" class="btn btn-lg btn-primary">Login</a>
+                                    <a href="{% url 'profiles:register' %}" class="btn btn-lg btn-danger">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center v-center" style="font-size:39pt;">
+            <a href="#"><i class="icon-google-plus"></i></a>
+            <a href="#"><i class="icon-facebook"></i></a>
+            <a href="#"><i class="icon-twitter"></i></a>
+            <a href="#"><i class="icon-github"></i></a>
+            <a href="#"><i class="icon-pinterest"></i></a>
+        </div>
+    </div>
+</div>
+<script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+</body>
+</html>

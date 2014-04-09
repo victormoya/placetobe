@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block extra_js %}{{ profile_form.media }}{% endblock %}
+
+{% load staticfiles %}
+
+{% block content %}
+    {% if profile_form.non_field_errors %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ profile_form.non_field_errors }}
+        </div>
+    {% endif %}
+    <form class="form-horizontal" action="{% url 'profiles:edit' request.user.pk %}" method="post"
+          enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2 class="page-header">Edit your profile</h2><br>
+        {% for field in profile_form %}
+            {% if field.errors %}
+                <div class="form-group has-error">
+                    <label class="control-label" for="inputError">{{ field.errors }}</label>
+                    <label class="col-xs-12 col-sm-2 col-md-2">{{ field.label }}</label>
+                    <label class="col-xs-12 col-sm-6 col-md-6">{{ field }}</label>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2">{{ field.label }}</label>
+                    <label class="col-xs-12 col-sm-6 col-md-6">{{ field }}</label>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save</button>
+
+{#    Para quitar el modal cambiar data-toggle="modal" data-target="#myModal" por type="submit" #}
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Changes on your profile</h4>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you going to send us this changes?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="{% url 'events:list' %}" class="btn btn-danger">Cancel</a>
+    </form>
+
+{% endblock %}

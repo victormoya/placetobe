@@ -1,0 +1,9 @@
+django==1.6.1
+
+south
+
+grappelli
+
+bootstrap-datetimepicker
+
+pillow

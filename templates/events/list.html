@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block menu_item_1 %} class="active" {% endblock %}
+
+{% block content %}
+    {% block page_header %}
+        <h1 class="page-header">Upcoming next</h1>
+    {% endblock %}
+    <ul>
+        <div class="row">
+            {% for event in events %}
+                <div class="col-md-6 framing">
+                    <li class="list-no-point">
+                        <h3>{{ event.title }}<br>
+                            <small>{{ event.date }}</small>
+                        </h3>
+                        published by <a href={% url "profiles:detail" event.publisher %}>{{ event.publisher }}</a>
+                        </br></br>
+                        <a href={% url 'events:detail' event.pk %}>
+                            <img class="img-ev-list" src="{{ event.image.url }}" alt="image"></br></br>
+                        </a>
+                    </li>
+                </div>
+            {% endfor %}
+        </div>
+    </ul>
+    <ul class="pager">
+        {% if events.has_previous %}
+            <li><a href="?page={{ events.previous_page_number }}">Previous</a></li>
+        {% endif %}
+        <span class="current"><label>{{ events.number }} of {{ events.paginator.num_pages }}</label></span>
+        {% if events.has_next %}
+            <li><a href="?page={{ events.next_page_number }}">Next</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}

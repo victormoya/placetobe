@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+    <h1 class="modal-header">Search results
+        <small>{{ event_count }} matches found</small>
+    </h1>
+        {% for event in events %}
+            <ul class="list-no-point">
+                <li><a href={% url 'events:detail' event.pk %}>
+                    <img src="{{ event.image.url }}" class="img-event-search"/> {{ event.title }}</a></li>
+            </ul>
+        {% empty %}
+            <p class="container">No matches found with the words entered. Try again with other words</p>
+        {% endfor %}
+{% endblock %}
+

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block extra_js %}{{ event_form.media }}{% endblock %}
+
+{% block menu_item_2 %} class="active" {% endblock %}
+
+{% block content %}
+
+<h2 class="page-header">Publish Event</h2>
+
+<form enctype="multipart/form-data" action="{% url 'events:add' %}" method="post" class="form-horizontal" role="form">
+    {% csrf_token %}
+    <p>
+    Please fill the next form to send us a new event.
+    After validation it will appear as upcoming event.
+    </p><br />
+        {% for field in event_form %}
+            {% if field.errors %}
+                <div class="form-group has-error">
+                    <label class="control-label" for="inputError">{{ field.errors }}</label>
+                    <label class="col-xs-12 col-sm-2">{{ field.label }}</label>
+                    <label class="col-xs-12 col-sm-5">{{ field }}</label>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2">{{ field.label }}</label>
+                    <label class="col-xs-12 col-sm-5">{{ field }}</label>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Add Event</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+    <style>
+        footer {
+            position: absolute;
+        }
+    </style>
+{% endblock %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+    {% if register_form.non_field_errors %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ register_form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    <form action="{% url 'profiles:register' %}" class="form-horizontal" method="POST">
+        <h2>Registration</h2></br>
+        {#        <hr class="col-md-10">#}
+        {% csrf_token %}
+        {% for field in register_form %}
+            {% if field.errors %}
+                <div class="form-group has-error">
+                    <label class="col-xs-12 col-sm-2">{{ field.label }}</label>
+                    <label class="col-xs-10 col-sm-6">{{ field }}</label>
+                    <label class="col-xs-10 col-sm-4 control-label" for="inputError">{{ field.errors }}</label>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2">{{ field.label }}</label>
+                    <label class="col-xs-10 col-sm-6">{{ field }}</label>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+{% endblock %}
+{% block footer %}
+{% endblock %}

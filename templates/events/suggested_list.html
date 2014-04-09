@@ -1,0 +1,10 @@
+{% extends "events/list.html" %}
+
+{% block menu_item_1 %} class="active" {% endblock %}
+
+{% block page_header %}
+    <h1 class="page-header">Recommended Events <small>{% for interest in interest_list %}
+        {{ interest }}
+    {% endfor %}
+    </small></h1>
+{% endblock %}

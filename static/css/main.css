@@ -1,0 +1,146 @@
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.img-detail {
+    width: 100%;
+    height: 100%;
+}
+
+.img-ev-list {
+    width: 87%;
+    height: 100%;
+}
+
+.img-avatar-sm {
+    width: 34px;
+    height: 34px;
+}
+
+.img-avatar-md {
+    width: 54px;
+    height: 54px;
+}
+
+.img-avatar-lg {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 15px;
+}
+
+.img-event-search{
+    width: 100px;
+    height: 70px;
+}
+
+.nav-icon {
+    margin-top: 8px;
+}
+
+.list-no-point {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-assistants{
+     padding-top: 56px;
+     padding-bottom: 25px;
+}
+
+.list-obj{
+    margin-top: 15px;
+}
+
+
+.comment-group{
+    padding-top: 65px
+}
+
+.a .dropdown-toggle{
+    padding: 8px 15px 8px 15px;
+}
+
+@media screen and (min-width: 600px){
+    .framing{
+        height: 550px;
+    }
+}
+
+
+.comment-content{
+    height: 6em;
+    width: 100%;
+    align-content: justify;
+}
+
+p{
+    align-content: justify;
+}
+
+.area-fixed{
+    resize: none;
+}
+
+
+
+footer{
+    width: auto;
+    height: 180px;
+    /*background-color: #262626;*/
+    border-top: #666 solid 6px;
+    background-color: #0f0f0f;
+    margin-top: 60px;
+    padding-top: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-style{
+    color: #AAAAAA;
+}
+
+#map {
+    height: 180px;
+}
+
+#filter-comment{
+    color: #AAAAAA;
+}

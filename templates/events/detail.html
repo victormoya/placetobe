@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load static %}
+{% block menu_item_2 %}{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-8">
+            <h1>{{ event.title }}</h1>
+            <img class="img-detail" src="{{ event.image.url }}"><br><br>
+            <strong>Description</strong>
+
+            <p>{{ event.description }}</p>
+
+            <p><strong>When</strong> {{ event.date }}</p>
+
+            <p><strong>Where</strong> {{ event.location }}</p>
+
+            <p><a href="https://maps.google.com/maps?q={{ event.location }}" target="_tab">See on map</a></p>
+            {% if event.website %}
+                <p>
+                    <strong>More info:</strong>
+                    <a href="http://{{ event.website }}" target="_tab">{{ event.website }}</a>
+                </p>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'events:assist' event.pk %}" class="btn btn-primary">Attend</a>
+                <a href="{% url 'events:not_assist' event.pk %}" class="btn btn-default">I will not go</a>
+            {% endif %}
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <div class="list-assistants">
+                <ul>
+                    <h3>Attending list
+                        <small><br>{{ event.count_assistant }} User attend this event</small>
+                    </h3>
+                    <hr>
+                    {% for assistant in event.assistants.all %}
+                        {% if assistant.confirmed %}
+                            <li class="list-no-point list-obj">
+                                <img src="{{ assistant.user.avatar.url }}" class="img-avatar-sm"/> {{ assistant.user }}
+                            </li>
+                        {% endif %}
+                    {% empty %}
+                        <li class="list-no-point list-obj">Be the first to attend this event</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {#    COMMENTS   #}
+    <div class="col-xs-12 col-sm-8">
+        <a name="comments"></a>
+
+        <div class="comment-group">
+            <h3>{{ event.count_comments }} Comments </h3>
+            {% if event.count_comments != 0 %}
+                <a href="{% url 'events:sort_likes' event.pk %}#comments">sort by likes</a>
+                <a href="{% url 'events:detail' event.pk %}#comments" class="pull-right">sort by date</a>
+            {% endif %}
+            <hr>
+            {% for comment in list_comments %}
+                {% if comment.is_approved %}
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-2">
+                            <img src="{{ comment.publisher.avatar.url }}" class="img-thumbnail img-avatar-md"/>
+                        </div>
+                        <div class="col-xs-8 col-sm-10">
+                            <h4><a href="{% url 'profiles:detail' comment.publisher %}">{{ comment.publisher }}</a>
+                                <small>{{ comment.created_at|timesince }} ago</small>
+                            </h4>
+                            <div class="comment-content">{{ comment.content }}</div>
+                            <a href="{% url 'comments:vote_positive' comment.pk %}#comments"
+                               class="glyphicon glyphicon-thumbs-up"></a>
+                            {{ comment.count_like }}
+                            <a href="{% url 'comments:vote_negative' comment.pk %}#comments"
+                               class="glyphicon glyphicon-thumbs-down"></a>
+                            {{ comment.count_dislike }}
+                            <button class="reply-button btn btn-link" data-comment="{{ comment.pk }}">reply</button>
+
+                            {% for reply in comment.replies.all %}
+                                {% if reply.is_approved %}
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-2">
+
+                                            <img src="{{ reply.publisher.avatar.url }}"
+                                                 class="img-thumbnail img-avatar-md"/>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-10">
+                                            <h4>
+                                                <a href="{% url 'profiles:detail' reply.publisher %}">{{ reply.publisher }}</a>
+                                                <small>{{ reply.created_at|timesince }} ago</small>
+                                            </h4>
+                                            <div class="comment-content">{{ reply.content }}</div>
+                                            <a href="{% url 'comments:vote_positive' reply.pk %}#comments"
+                                               class="glyphicon glyphicon-thumbs-up"></a>
+                                            {{ reply.count_like }}
+                                            <a href="{% url 'comments:vote_negative' reply.pk %}#comments"
+                                               class="glyphicon glyphicon-thumbs-down"></a>
+                                            {{ reply.count_dislike }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            {#     REPLY FORM - initially hidden    #}
+                            <div class="form-group reply-form" id="form_reply_{{ comment.pk }}">
+                                <hr>
+                                <form action="{% url 'events:post_reply' event.pk comment.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-3">
+                                            <img src="{{ request.user.avatar.url }}" class="img-thumbnail img-avatar-md"/>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-9 ">
+                                            <div class="comment-content">
+                                                {{ form_comments.content }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-right" style="margin-top: 10px">
+                                            <button type="submit" class="btn btn-primary">Reply</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                {% endif %}
+            {% empty %}
+                <div class="text-center">Be the first to comment</div>
+                <hr>
+            {% endfor %}
+            <div class="form-group">
+                <form action="{% url 'events:post_comment' event.pk %}" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-2">
+                            {% if request.user.is_authenticated %}
+                                <img src="{{ request.user.avatar.url }}" class="img-thumbnail img-avatar-md"/>
+                            {% else %}
+                                <img src="{% static 'images/default_usr.png' %}" class="img-thumbnail img-avatar-md"/>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-8 col-sm-10">
+                            <div class="comment-content">
+                                {{ form_comments.content }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 text-right" style="margin-top: 10px">
+                            <button type="submit" class="btn btn-primary">Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

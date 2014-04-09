@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block extra_js %}{{ profile_form.media }}{% endblock %}
+
+{% load staticfiles %}
+
+{% load thumbnail %}
+
+{% block content %}
+    <h1>{{ profile.username }}</h1>
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            {% thumbnail profile.avatar "200x200" crop="center" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="thumbnail"/>
+            {% endthumbnail %}
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Personal information</strong></div>
+                <table class="table">
+                    <div class="col-xs-4 col-md-4">
+                        <strong>Name </strong> <br>
+                        <strong>Hometown </strong> <br>
+                        <strong>Birthday </strong> <br>
+                        <strong>Interest </strong> <br>
+                    </div>
+                    <div class="col-xs-8 col-md-8">
+                        {{ profile.first_name }} {{ profile.last_name }} <br>
+                        {{ profile.hometown }} <br>
+                        {{ profile.date_of_birth }} <br>
+                        {{ profile.category1 }} <br>
+                    </div>
+                </table>
+            </div>
+        </div>
+    </div>
+    <h3>Events published</h3>
+    {% for event in events %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ event.title }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="media">
+                    <a class="pull-left" href="{% url 'events:detail' event.pk %}">
+                        <img class="img-event-search" src="{{ event.image.url }}">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ event.date }}</h4>
+                        <p>{{ event.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block extra_css %}
+    <style>
+        footer{
+            position: absolute;
+        }
+    </style> 
+{% endblock %}
+{% load staticfiles %}
+
+{% block content %}
+        <form class="form-signin" role="form" action="{% url 'profiles:login' %}" method="POST">
+            {% csrf_token %}
+            <h2 class="form-signin-heading">Log in</h2>
+            <input type="text" class="form-control" placeholder="Username or Email" id="id_user" name="user" required>
+            <input type="password" class="form-control" placeholder="Password" id="id_password" name="password" required>
+            <button class="btn btn-md btn-primary" type="submit">Sign in</button>
+            <label class="pull-right"><input name="remember_me" type="checkbox">Keep me logged in</label>
+        </form>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+
